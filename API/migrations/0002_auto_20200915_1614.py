@@ -6,7 +6,7 @@ from django.db import migrations
 class Migration(migrations.Migration):
 
     dependencies = [
-        ('Reader', '0001_initial'),
+        ('API', '0001_initial'),
     ]
 
     operations = [

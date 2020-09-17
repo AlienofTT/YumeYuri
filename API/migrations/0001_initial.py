@@ -23,7 +23,7 @@ class Migration(migrations.Migration):
             name='Charpter',
             fields=[
                 ('id', models.AutoField(primary_key=True, serialize=False)),
-                ('manga', models.ForeignKey(on_delete=django.db.models.deletion.CASCADE, to='Reader.manga')),
+                ('manga', models.ForeignKey(on_delete=django.db.models.deletion.CASCADE, to='API.manga')),
             ],
         ),
     ]
