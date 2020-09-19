@@ -3,8 +3,10 @@ from django.shortcuts import render
 from django.http import HttpResponse
 
 from rest_framework import generics
+from rest_framework import permissions
 
 from .models import Manga
+from .permissions import IsOwnerOrReadOnly
 from .serializers import MangaSerializer, UserSerializer
 
 
@@ -18,6 +20,7 @@ def index(request):
 class MangaList(generics.ListCreateAPIView):
 	queryset = Manga.objects.all()
 	serializer_class = MangaSerializer
+	permission_classes = [permissions.IsAuthenticatedOrReadOnly]
 
 	def perform_create(self, serializer):
 		serializer.save(owner=self.request.user)
@@ -26,6 +29,7 @@ class MangaList(generics.ListCreateAPIView):
 class MangaDetail(generics.RetrieveUpdateDestroyAPIView):
 	queryset = Manga.objects.all()
 	serializer_class = MangaSerializer
+	permission_classes = [permissions.IsAuthenticatedOrReadOnly, IsOwnerOrReadOnly]
 
 
 class UserList(generics.ListCreateAPIView):
