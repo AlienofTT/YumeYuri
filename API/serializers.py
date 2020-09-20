@@ -4,17 +4,18 @@ from rest_framework import serializers
 from .models import Manga
 
 
-class MangaSerializer(serializers.ModelSerializer):
+class MangaSerializer(serializers.HyperlinkedModelSerializer):
 	owner = serializers.ReadOnlyField(source='owner.username')
 
 	class Meta:
 		model = Manga
-		fields = ['id', 'title', 'bgmId', 'dmzjId', 'owner']
+		fields = ['url', 'id', 'title', 'bgmId', 'dmzjId', 'owner']
 
 
-class UserSerializer(serializers.ModelSerializer):
-	mangas = serializers.PrimaryKeyRelatedField(many=True, queryset=Manga.objects.all())
+class UserSerializer(serializers.HyperlinkedModelSerializer):
+	# mangas = serializers.PrimaryKeyRelatedField(many=True, queryset=Manga.objects.all())
+	mangas = serializers.HyperlinkedRelatedField(many=True, view_name='manga-detail', read_only=True)
 
 	class Meta:
 		model = User
-		fields = ['id', 'username', 'mangas']
+		fields = ['url', 'id', 'username', 'mangas']
