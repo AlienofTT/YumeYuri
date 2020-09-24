@@ -1,20 +1,12 @@
-from django.urls import path
+from django.urls import path, include
+from rest_framework.routers import DefaultRouter
 from rest_framework.urlpatterns import format_suffix_patterns
-from . import views
+from .views import *
 
-urlpatterns = format_suffix_patterns([
-    path('',
-         views.api_root),
-    path('manga/',
-         views.MangaList.as_view(),
-         name='manga-list'),
-    path('manga/<int:pk>',
-         views.MangaDetail.as_view(),
-         name='manga-detail'),
-    path('user/',
-         views.UserList.as_view(),
-         name='user-list'),
-    path('user/<int:pk>',
-         views.UserDetail.as_view(),
-         name='user-detail')
-])
+router = DefaultRouter()
+router.register(r'manga', MangaViewSet)
+router.register(r'users', UserViewSet)
+
+urlpatterns = [
+    path('', include(router.urls)),
+]

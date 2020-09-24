@@ -12,6 +12,7 @@ class Manga(models.Model):
 	dmzjId = models.CharField(null=True, max_length=100)
 
 
+
 class Chapter(models.Model):
 	id = models.AutoField(primary_key=True)
 	title = models.CharField(null=True, max_length=200)
