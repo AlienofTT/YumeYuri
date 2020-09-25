@@ -13,7 +13,7 @@ class Manga(models.Model):
 	title = models.CharField(max_length=50)
 	owner = models.ForeignKey(User, related_name='mangas', on_delete=models.SET_DEFAULT, default=1)
 	magazine = models.ForeignKey(Magazine, related_name='mangas', on_delete=models.SET_NULL, null=True)
-	bgm_id = models.IntegerField()
+	bgm_id = models.IntegerField(default=-1)
 	dmzj_id = models.CharField(null=True, max_length=50)
 
 
@@ -27,7 +27,7 @@ class Chapter(models.Model):
 	id = models.AutoField(primary_key=True)
 	title = models.CharField(null=True, max_length=50)
 	manga = models.ForeignKey(Manga, related_name='chapters', on_delete=models.CASCADE)
-	volume = models.ForeignKey(Volume, related_name='chapters', on_delete=models.CASCADE)
+	volume = models.ForeignKey(Volume, related_name='chapters', on_delete=models.CASCADE, null=True)
 
 
 class Image(models.Model):

@@ -1,7 +1,13 @@
 from django.contrib.auth.models import User
 from rest_framework import serializers
 
-from .models import Manga
+from .models import *
+
+
+class MagazineSerializer(serializers.HyperlinkedModelSerializer):
+	class Meta:
+		model = Magazine
+		fields = ['title', 'id']
 
 
 class MangaSerializer(serializers.HyperlinkedModelSerializer):
@@ -9,7 +15,16 @@ class MangaSerializer(serializers.HyperlinkedModelSerializer):
 
 	class Meta:
 		model = Manga
-		fields = ['url', 'id', 'title', 'bgmId', 'dmzjId', 'owner']
+		fields = ['url', 'id', 'title', 'bgm_id', 'dmzj_id', 'owner']
+
+
+class ChapterSerializer(serializers.HyperlinkedModelSerializer):
+	manga_name = serializers.CharField(source='manga.title', read_only=True)
+	manga = serializers.HyperlinkedRelatedField(view_name='manga-detail', queryset=Manga.objects.all())
+
+	class Meta:
+		model = Chapter
+		fields = ['url', 'id', 'title', 'manga_name', 'manga']
 
 
 class UserSerializer(serializers.HyperlinkedModelSerializer):
